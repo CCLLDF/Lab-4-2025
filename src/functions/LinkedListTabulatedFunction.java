@@ -6,8 +6,7 @@ import java.io.*;
  * Табулированная функция на основе двусвязного циклического списка
  * с выделенной головой (sentinel).
  */
-public class LinkedListTabulatedFunction implements TabulatedFunction, Serializable, Externalizable {
-    private static final long serialVersionUID = 1L;
+public class LinkedListTabulatedFunction implements TabulatedFunction, Externalizable {
 
     private static final double EPSILON = 1e-10;
 
@@ -20,8 +19,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
      * внешний код не может получить ссылки на узлы, взаимодействие
      * идет через методы внешнего класса.
      */
-    private static class FunctionNode implements Serializable {
-        private static final long serialVersionUID = 1L;
+    private static class FunctionNode {
         private FunctionPoint value;
         private FunctionNode next;
         private FunctionNode prev;
@@ -266,7 +264,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
     /**
      * Возвращает узел по индексу (0..size-1) с оптимизацией за счет кэша.
      */
-    FunctionNode getNodeByIndex(int index) {
+    private FunctionNode getNodeByIndex(int index) {
         if (index < 0 || index >= size) {
             throw new FunctionPointIndexOutOfBoundsException("Index out of bounds: " + index);
         }
@@ -310,7 +308,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
     /**
      * Добавляет узел в конец (перед головой) и возвращает его.
      */
-    FunctionNode addNodeToTail() {
+    private FunctionNode addNodeToTail() {
         FunctionNode node = new FunctionNode(null);
         insertBefore(head, node);
         return node;
@@ -336,7 +334,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
      * Добавляет узел по индексу (0..size) и возвращает его.
      * Если index == size — вставка в хвост.
      */
-    FunctionNode addNodeByIndex(int index) {
+    private FunctionNode addNodeByIndex(int index) {
         if (index < 0 || index > size) {
             throw new FunctionPointIndexOutOfBoundsException("Index out of bounds: " + index);
         }
@@ -356,7 +354,7 @@ public class LinkedListTabulatedFunction implements TabulatedFunction, Serializa
     /**
      * Удаляет узел по индексу и возвращает его (узел отсоединён).
      */
-    FunctionNode deleteNodeByIndex(int index) {
+    private FunctionNode deleteNodeByIndex(int index) {
         FunctionNode node = getNodeByIndex(index);
         unlink(node);
         // Инвалидация/коррекция кэша

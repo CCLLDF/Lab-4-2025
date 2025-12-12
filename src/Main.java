@@ -9,7 +9,7 @@ import functions.basic.Log;
 
 import java.io.*;
 
-public class Main {
+public class    Main {
     private static final double PI = Math.PI;
 
     public static void main(String[] args) {
@@ -167,7 +167,21 @@ public class Main {
             readExp = TabulatedFunctions.readTabulatedFunction(reader);
         }
 
-        System.out.println("Сравнение исходной и считанной функции на отрезке [0, 10] с шагом 1:");
+        // Вывод исходного набора точек
+        System.out.println("Исходный набор точек:");
+        for (int i = 0; i < tabulatedExp.getPointsCount(); i++) {
+            System.out.printf("  Точка %d: (%.6f, %.6f)%n", i, 
+                tabulatedExp.getPointX(i), tabulatedExp.getPointY(i));
+        }
+
+        // Вывод считанного набора точек
+        System.out.println("\nСчитанный набор точек:");
+        for (int i = 0; i < readExp.getPointsCount(); i++) {
+            System.out.printf("  Точка %d: (%.6f, %.6f)%n", i, 
+                readExp.getPointX(i), readExp.getPointY(i));
+        }
+
+        System.out.println("\nСравнение исходной и считанной функции на отрезке [0, 10] с шагом 1:");
         System.out.printf("%-8s %-20s %-20s %-20s%n", "x", "Исходная exp(x)", "Считанная exp(x)", "Разница");
         System.out.println("--------------------------------------------------------------------------------");
 
@@ -202,7 +216,21 @@ public class Main {
             readLn = TabulatedFunctions.inputTabulatedFunction(fis);
         }
 
-        System.out.println("Сравнение исходной и считанной функции на отрезке [0.1, 10] с шагом 1:");
+        // Вывод исходного набора точек
+        System.out.println("Исходный набор точек:");
+        for (int i = 0; i < tabulatedLn.getPointsCount(); i++) {
+            System.out.printf("  Точка %d: (%.6f, %.6f)%n", i, 
+                tabulatedLn.getPointX(i), tabulatedLn.getPointY(i));
+        }
+
+        // Вывод считанного набора точек
+        System.out.println("\nСчитанный набор точек:");
+        for (int i = 0; i < readLn.getPointsCount(); i++) {
+            System.out.printf("  Точка %d: (%.6f, %.6f)%n", i, 
+                readLn.getPointX(i), readLn.getPointY(i));
+        }
+
+        System.out.println("\nСравнение исходной и считанной функции на отрезке [0.1, 10] с шагом 1:");
         System.out.printf("%-8s %-20s %-20s %-20s%n", "x", "Исходная ln(x)", "Считанная ln(x)", "Разница");
         System.out.println("--------------------------------------------------------------------------------");
 

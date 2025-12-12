@@ -2,7 +2,7 @@ package functions;
 
 import java.io.*;
 
-public class ArrayTabulatedFunction implements TabulatedFunction, Serializable, Externalizable {
+public class ArrayTabulatedFunction implements TabulatedFunction, Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final double EPSILON = 1e-10;
@@ -204,27 +204,6 @@ public class ArrayTabulatedFunction implements TabulatedFunction, Serializable, 
             System.arraycopy(funct, i, funct, i + 1, len - i);
             funct[i] = new FunctionPoint(point);
             len++;
-        }
-    }
-
-    // Реализация Externalizable для более эффективной сериализации
-    @Override
-    public void writeExternal(ObjectOutput out) throws IOException {
-        out.writeInt(len);
-        for (int i = 0; i < len; i++) {
-            out.writeDouble(funct[i].getX());
-            out.writeDouble(funct[i].getY());
-        }
-    }
-
-    @Override
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
-        len = in.readInt();
-        funct = new FunctionPoint[len];
-        for (int i = 0; i < len; i++) {
-            double x = in.readDouble();
-            double y = in.readDouble();
-            funct[i] = new FunctionPoint(x, y);
         }
     }
 }

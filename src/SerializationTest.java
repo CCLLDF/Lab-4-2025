@@ -1,6 +1,8 @@
 import functions.Function;
 import functions.TabulatedFunction;
 import functions.TabulatedFunctions;
+import functions.ArrayTabulatedFunction;
+import functions.LinkedListTabulatedFunction;
 import functions.Functions;
 import functions.basic.Exp;
 import functions.basic.Log;
@@ -21,11 +23,31 @@ public class SerializationTest {
             System.out.println("=== ТЕСТ СЕРИАЛИЗАЦИИ ===\n");
             System.out.println("Создана табулированная функция ln(exp(x)) на отрезке [0, 10] с 11 точками\n");
             
-            // Тест 1: Сериализация через Serializable
-            testSerializable(tabulated);
+            // Создание ArrayTabulatedFunction для теста Serializable
+            ArrayTabulatedFunction arrayFunction = new ArrayTabulatedFunction(
+                tabulated.getLeftDomainBorder(), 
+                tabulated.getRightDomainBorder(), 
+                tabulated.getPointsCount()
+            );
+            for (int i = 0; i < tabulated.getPointsCount(); i++) {
+                arrayFunction.setPointY(i, tabulated.getPointY(i));
+            }
             
-            // Тест 2: Сериализация через Externalizable
-            testExternalizable(tabulated);
+            // Создание LinkedListTabulatedFunction для теста Externalizable
+            LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(
+                tabulated.getLeftDomainBorder(), 
+                tabulated.getRightDomainBorder(), 
+                tabulated.getPointsCount()
+            );
+            for (int i = 0; i < tabulated.getPointsCount(); i++) {
+                linkedListFunction.setPointY(i, tabulated.getPointY(i));
+            }
+            
+            // Тест 1: Сериализация через Serializable (ArrayTabulatedFunction)
+            testSerializable(arrayFunction);
+            
+            // Тест 2: Сериализация через Externalizable (LinkedListTabulatedFunction)
+            testExternalizable(linkedListFunction);
             
             // Тест 3: Анализ файлов
             analyzeSerializationFiles();
