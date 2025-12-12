@@ -167,7 +167,19 @@ public class    Main {
             readExp = TabulatedFunctions.readTabulatedFunction(reader);
         }
 
-        System.out.println("Сравнение исходной и считанной функции на отрезке [0, 10] с шагом 1:");
+        // Вывод исходного набора точек
+        System.out.println("Исходный набор точек:");
+        for (int i = 0; i < tabulatedExp.getPointsCount(); i++) {
+            System.out.printf("  (%f, %f)%n", tabulatedExp.getPointX(i), tabulatedExp.getPointY(i));
+        }
+
+        // Вывод считанного набора точек
+        System.out.println("\nСчитанный набор точек:");
+        for (int i = 0; i < readExp.getPointsCount(); i++) {
+            System.out.printf("  (%f, %f)%n", readExp.getPointX(i), readExp.getPointY(i));
+        }
+
+        System.out.println("\nСравнение исходной и считанной функции на отрезке [0, 10] с шагом 1:");
         System.out.printf("%-8s %-20s %-20s %-20s%n", "x", "Исходная exp(x)", "Считанная exp(x)", "Разница");
         System.out.println("--------------------------------------------------------------------------------");
 
@@ -202,7 +214,19 @@ public class    Main {
             readLn = TabulatedFunctions.inputTabulatedFunction(fis);
         }
 
-        System.out.println("Сравнение исходной и считанной функции на отрезке [0.1, 10] с шагом 1:");
+        // Вывод исходного набора точек
+        System.out.println("Исходный набор точек:");
+        for (int i = 0; i < tabulatedLn.getPointsCount(); i++) {
+            System.out.printf("  (%f, %f)%n", tabulatedLn.getPointX(i), tabulatedLn.getPointY(i));
+        }
+
+        // Вывод считанного набора точек
+        System.out.println("\nСчитанный набор точек:");
+        for (int i = 0; i < readLn.getPointsCount(); i++) {
+            System.out.printf("  (%f, %f)%n", readLn.getPointX(i), readLn.getPointY(i));
+        }
+
+        System.out.println("\nСравнение исходной и считанной функции на отрезке [0.1, 10] с шагом 1:");
         System.out.printf("%-8s %-20s %-20s %-20s%n", "x", "Исходная ln(x)", "Считанная ln(x)", "Разница");
         System.out.println("--------------------------------------------------------------------------------");
 

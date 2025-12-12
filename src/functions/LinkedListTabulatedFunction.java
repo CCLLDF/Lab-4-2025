@@ -6,8 +6,7 @@ import java.io.*;
  * Табулированная функция на основе двусвязного циклического списка
  * с выделенной головой (sentinel).
  */
-public class LinkedListTabulatedFunction implements TabulatedFunction, Serializable, Externalizable {
-    private static final long serialVersionUID = 1L;
+public class LinkedListTabulatedFunction implements TabulatedFunction, Externalizable {
 
     private static final double EPSILON = 1e-10;
 

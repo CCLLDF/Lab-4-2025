@@ -1,9 +1,9 @@
 import functions.Function;
 import functions.TabulatedFunction;
 import functions.TabulatedFunctions;
+import functions.Functions;
 import functions.ArrayTabulatedFunction;
 import functions.LinkedListTabulatedFunction;
-import functions.Functions;
 import functions.basic.Exp;
 import functions.basic.Log;
 
@@ -17,37 +17,32 @@ public class SerializationTest {
             Function ln = new Log(Math.E);
             Function composition = Functions.composition(exp, ln);
             
-            // Создание табулированного аналога на отрезке [0, 10] с 11 точками
-            TabulatedFunction tabulated = TabulatedFunctions.tabulate(composition, 0, 10, 11);
-            
             System.out.println("=== ТЕСТ СЕРИАЛИЗАЦИИ ===\n");
+            
+            // Создание табулированного аналога на отрезке [0, 10] с 11 точками для Array (Serializable)
+            ArrayTabulatedFunction arrayTabulated = new ArrayTabulatedFunction(0, 10, 11);
+            double step = 10.0 / 10;
+            for (int i = 0; i < 11; i++) {
+                double x = i * step;
+                double y = composition.getFunctionValue(x);
+                arrayTabulated.setPointY(i, y);
+            }
+            
+            // Создание табулированного аналога на отрезке [0, 10] с 11 точками для LinkedList (Externalizable)
+            LinkedListTabulatedFunction linkedListTabulated = new LinkedListTabulatedFunction(0, 10, 11);
+            for (int i = 0; i < 11; i++) {
+                double x = i * step;
+                double y = composition.getFunctionValue(x);
+                linkedListTabulated.setPointY(i, y);
+            }
+            
             System.out.println("Создана табулированная функция ln(exp(x)) на отрезке [0, 10] с 11 точками\n");
             
-            // Создание ArrayTabulatedFunction для теста Serializable
-            ArrayTabulatedFunction arrayFunction = new ArrayTabulatedFunction(
-                tabulated.getLeftDomainBorder(), 
-                tabulated.getRightDomainBorder(), 
-                tabulated.getPointsCount()
-            );
-            for (int i = 0; i < tabulated.getPointsCount(); i++) {
-                arrayFunction.setPointY(i, tabulated.getPointY(i));
-            }
+            // Тест 1: Сериализация через Serializable (Array)
+            testSerializable(arrayTabulated);
             
-            // Создание LinkedListTabulatedFunction для теста Externalizable
-            LinkedListTabulatedFunction linkedListFunction = new LinkedListTabulatedFunction(
-                tabulated.getLeftDomainBorder(), 
-                tabulated.getRightDomainBorder(), 
-                tabulated.getPointsCount()
-            );
-            for (int i = 0; i < tabulated.getPointsCount(); i++) {
-                linkedListFunction.setPointY(i, tabulated.getPointY(i));
-            }
-            
-            // Тест 1: Сериализация через Serializable (ArrayTabulatedFunction)
-            testSerializable(arrayFunction);
-            
-            // Тест 2: Сериализация через Externalizable (LinkedListTabulatedFunction)
-            testExternalizable(linkedListFunction);
+            // Тест 2: Сериализация через Externalizable (LinkedList)
+            testExternalizable(linkedListTabulated);
             
             // Тест 3: Анализ файлов
             analyzeSerializationFiles();
